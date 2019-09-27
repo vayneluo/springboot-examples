@@ -1,0 +1,14 @@
+regCenter:
+  serverList: vayne.haizol.com:2182
+  nameSpace: vayne-schedule
+
+#############################
+#elastic-job
+#############################
+# elastic-job log trace
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb?characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
