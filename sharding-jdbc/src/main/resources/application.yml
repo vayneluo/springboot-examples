@@ -1,0 +1,23 @@
+## JPA Config
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+## mysql database0
+database0:
+  url: jdbc:mysql://localhost:3306/database0?characterEncoding=utf8&useSSL=false
+  username: root
+  password: root
+  driverClassName: com.mysql.jdbc.Driver
+  databaseName: database0
+
+## mysql database1
+database1:
+  url: jdbc:mysql://localhost:3306/database1?characterEncoding=utf8&useSSL=false
+  username: root
+  password: root
+  driverClassName: com.mysql.jdbc.Driver
+  databaseName: database1
