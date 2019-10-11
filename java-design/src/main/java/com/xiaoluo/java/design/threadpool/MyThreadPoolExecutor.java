@@ -81,15 +81,12 @@ public class MyThreadPoolExecutor implements Executor {
                 new Thread(() ->{
                     log.info("thread name : {}",Thread.currentThread().getName());
                     Runnable runnable = task;
-                    int cnt = 0;
                     while(null != runnable || ((runnable = getTask()) != null)){
                         try{
                             runnable.run();
                         }finally {
                             runnable = null;
                         }
-                        cnt++;
-                        System.out.println(threadName + "线程执行任务" + cnt);
                     }
                 },threadName).start();
                 break;

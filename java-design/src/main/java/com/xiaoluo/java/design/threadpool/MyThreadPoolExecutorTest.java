@@ -23,12 +23,17 @@ public class MyThreadPoolExecutorTest {
             executor.execute(() -> {
                 try{
                     System.out.println("current Thread name : " + Thread.currentThread().getName() + "开始执行");
-                    Thread.sleep(10000);
+                    Thread.sleep(100);
                     System.out.println(Thread.currentThread().getName()+"执行完毕" + "----------"+ "running: "+ LocalDateTime.now() + ": " + num.incrementAndGet());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             });
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("线程池中线程数目："+executor.getRunningCount() +"，队列中等待执行的任务数目："+
                     executor.getTaskQueue().size());
         }
