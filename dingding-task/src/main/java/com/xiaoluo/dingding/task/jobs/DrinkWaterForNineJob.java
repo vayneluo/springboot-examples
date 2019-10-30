@@ -3,7 +3,6 @@ package com.xiaoluo.dingding.task.jobs;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
-import com.dingtalk.api.response.OapiRobotSendResponse;
 import com.taobao.api.ApiException;
 import com.taobao.api.internal.util.Base64;
 import lombok.extern.slf4j.Slf4j;
@@ -27,57 +26,48 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Component
 @Slf4j
-public class DrinkWaterJob {
+public class DrinkWaterForNineJob {
 
     /** 钉钉WEB_HOOK 地址**/
-    private static final String WEB_HOOK = "https://oapi.dingtalk.com/robot/send?access_token=92d7118cecfa9b004f342afddd92e27e7a81dde1ca91388abab481fbbbbab559";
+    private static final String WEB_HOOK = "https://oapi.dingtalk.com/robot/send?access_token=de107d318a019aa2860a5e23c37fe4584a45e4920db505f7258b30d911b26559";
 
     /** 签名 **/
-    private static final String SECRET = "SEC27131130bf6e8ef21386271853368d532d58071625f7d710cf77979027990b9f";
-
-    /** @ 人员 **/
-    private static final String VAYNE_MOBILE = "18621706355";
-    private static final String LCHM_MOBILE = "17330797616";
+    private static final String SECRET = "SECf88898a525adea7a3d0cbe616d805d4cfc0bf54dbb27fab1ef03495fadcc7f2a";
 
     /** 喝水计数器 **/
-    private AtomicInteger waterCount = new AtomicInteger(0);
+    private AtomicInteger waterNineCount = new AtomicInteger(0);
 
     /** 每天喝水杯数 **/
-    private static final int WATER_TOTAL = 8;
+    private static final int WATER_TOTAL = 6;
 
     /** 每天9点开始重置喝水杯数 **/
-    private static final int HOUR_OF_DAY = 9;
+    private static final int HOUR_OF_DAY = 10;
 
-    @Scheduled(cron="0 0 9,10,11,13,14,15,16,17 ? * MON-FRI")
+    @Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
     public void needDrinkWater() throws Exception{
         DingTalkClient client = new DefaultDingTalkClient(getFinalUrl());
         OapiRobotSendRequest request = new OapiRobotSendRequest();
         // 喝水次数
-        final int currentValue = waterCount.get();
+        final int currentValue = waterNineCount.get();
         if(currentValue == WATER_TOTAL || needReset()){
             // 重置喝水次数
-            waterCount.set(0);
+            waterNineCount.set(0);
         }
-        final int count = waterCount.incrementAndGet();
-        // 设置@的人
-        OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
-        at.setAtMobiles(Arrays.asList(VAYNE_MOBILE,LCHM_MOBILE));
-        at.setIsAtAll("true");
-        request.setAt(at);
+        final int count = waterNineCount.incrementAndGet();
         request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
-        markdown.setTitle("旺仔友情提醒");
+        markdown.setTitle("九九友情提醒");
         StringBuilder builder = new StringBuilder();
-        builder.append("#### 【旺仔友情提醒】 \n\n")
+        builder.append("#### 【九九友情提醒】 \n\n")
                 .append("> 又到了大家最爱的喝水环节了 \n\n")
                 .append("> 这是你今天喝的第 **"+count+"** 杯水哦，加油加油！\n\n")
-                .append("> ###### 本消息来自旺仔Iphone 11 Pro "+getDateStr() +"  发布 \n");
+                .append("> ###### 本消息来自小九家的木木&咕噜 "+getDateStr() +"  发布 \n");
         markdown.setText(builder.toString());
         request.setMarkdown(markdown);
-        log.info("消息体：{}",request);
         try {
-            log.info("开始发送消息");
+            log.info("开始发送消息" + getDateStr());
             client.execute(request);
+            log.info("喝水提醒完毕");
         } catch (ApiException e) {
             e.printStackTrace();
         }
