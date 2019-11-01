@@ -20,6 +20,10 @@ public class AppConfigConstants {
     public static final String NINE_SECRET = "SECf88898a525adea7a3d0cbe616d805d4cfc0bf54dbb27fab1ef03495fadcc7f2a";
     /** 阿里云资源服务器 **/
     public static final String RES_SERVER = "http:res.vayner.cn/";
+    /** 喝水计数器过期时间 **/
+    public static final long COUNT_EXPIRE = 12;
+    /** 累加次数 **/
+    public static final int ADD_DELTA = 1;
 
 
 }

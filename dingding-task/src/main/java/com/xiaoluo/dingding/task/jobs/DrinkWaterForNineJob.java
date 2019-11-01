@@ -6,8 +6,11 @@ import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.taobao.api.ApiException;
 import com.taobao.api.internal.util.Base64;
 import com.xiaoluo.dingding.task.common.constants.AppConfigConstants;
+import com.xiaoluo.dingding.task.common.constants.RedisKeyConstants;
+import com.xiaoluo.dingding.task.service.weather.WaterCountService;
 import com.xiaoluo.dingding.task.utils.RobotUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -30,26 +33,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class DrinkWaterForNineJob {
 
-    /** 喝水计数器 **/
-    private AtomicInteger waterNineCount = new AtomicInteger(0);
-
-    /** 每天喝水杯数 **/
-    private static final int WATER_TOTAL = 6;
-
-    /** 每天10点开始重置喝水杯数 **/
-    private static final int HOUR_OF_DAY = 10;
+    @Autowired
+    WaterCountService waterCountService;
 
     @Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
     public void needDrinkWater(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.NINE_WEB_HOOK,AppConfigConstants.NINE_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
-        // 喝水次数
-        final int currentValue = waterNineCount.get();
-        if(currentValue == WATER_TOTAL || needReset()){
-            // 重置喝水次数
-            waterNineCount.set(0);
-        }
-        final int count = waterNineCount.incrementAndGet();
+        // Redis中获取最新杯数，如果过期，则重新开始计数
+        final Long count = waterCountService.getWaterCount(RedisKeyConstants.NINE_WATER_COUNT_KEY);
         // 设置@的人
         OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
         at.setIsAtAll("true");
@@ -71,14 +63,5 @@ public class DrinkWaterForNineJob {
         } catch (ApiException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 判断时间是否重置喝水杯数
-     */
-    private boolean needReset() {
-        Calendar cal=Calendar.getInstance();
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        return hour == HOUR_OF_DAY;
     }
 }
