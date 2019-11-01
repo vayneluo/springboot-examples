@@ -50,7 +50,7 @@ public class DailyWeatherJob {
             return;
         }
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
-        String url = weatherCacheService.getPicUrlByCode(now.getCity().getWeather_code());
+        String url = weatherCacheService.getPicUrlByCode(now.getDetail().getWeather_code());
         String imgUrl = AppConfigConstants.RES_SERVER + url;
         log.info("天气图片地址：{}",imgUrl);
         OapiRobotSendRequest request = new OapiRobotSendRequest();
