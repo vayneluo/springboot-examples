@@ -32,7 +32,7 @@ public class DrinkWaterJob {
     @Autowired
     WaterCountService waterCountService;
 
-    @Scheduled(cron="0 0 9,10,11,13,14,15,16,17 ? * MON-FRI")
+    @Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
     public void needDrinkWater(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
