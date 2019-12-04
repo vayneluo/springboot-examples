@@ -22,7 +22,7 @@ public class ThreadLocalDemo {
       }, "thread - " + i).start();
     }
     countDownLatch.await();
-
+    System.out.println("1.0.x分支修改了代码");
   }
 
   private static class InnerClass {
