@@ -10,6 +10,7 @@ public class ThreadLocalDemo {
     CountDownLatch countDownLatch = new CountDownLatch(threads);
     InnerClass innerClass = new InnerClass();
     System.out.println("1.0.1分支修改了此处代码");
+    System.out.println("1.0.1分支修改了此处代码");
     for(int i = 1; i <= threads; i++) {
       new Thread(() -> {
         for(int j = 0; j < 4; j++) {
@@ -22,7 +23,7 @@ public class ThreadLocalDemo {
       }, "thread - " + i).start();
     }
     countDownLatch.await();
-    System.out.println("1.0.x分支修改了代码");
+    System.out.println("1.0.1分支修改了此处代码");
   }
 
   private static class InnerClass {
