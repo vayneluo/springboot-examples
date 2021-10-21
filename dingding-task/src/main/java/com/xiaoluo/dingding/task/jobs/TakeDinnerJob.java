@@ -5,52 +5,40 @@ import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.taobao.api.ApiException;
 import com.xiaoluo.dingding.task.common.constants.AppConfigConstants;
-import com.xiaoluo.dingding.task.common.constants.RedisKeyConstants;
-import com.xiaoluo.dingding.task.service.weather.WaterCountService;
 import com.xiaoluo.dingding.task.utils.RobotUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @classname: DrinkWaterJob
- * @description: 喝水
+ * @classname: DinnerJob
+ * @description: 点外卖提醒
  * @author: Vayne.Luo
- * @date 2019/10/9 11:52
+ * @date 2021/10/21 13:44
  */
-//@Component
+@Component
 @Slf4j
-public class DrinkWaterJob {
-    /** @ 人员 **/
-    private static final String VAYNE_MOBILE = "18621706355";
-    private static final String LCHM_MOBILE = "17330797616";
+public class TakeDinnerJob {
 
-    @Autowired
-    WaterCountService waterCountService;
-
-    //@Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
-    public void needDrinkWater(){
+    @Scheduled(cron="0 30 11 ? * MON-FRI")
+    public void needDinner(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
-        // Redis中获取最新杯数，如果过期，则重新开始计数
-        final Long count = waterCountService.getWaterCount(RedisKeyConstants.WANG_WATER_COUNT_KEY);
         // 设置@的人
         OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
-        at.setAtMobiles(Arrays.asList(VAYNE_MOBILE,LCHM_MOBILE));
         at.setIsAtAll("true");
         request.setAt(at);
         request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
-        markdown.setTitle("旺仔友情提醒");
+        markdown.setTitle("干饭啦");
         StringBuilder builder = new StringBuilder();
-        builder.append("#### 【旺仔友情提醒】 \n\n")
-                .append("> 大宝，该喝水了 \n\n")
-                .append("> 这是你今天喝的第 **"+ count +"** 杯水哦，太棒了你！\n\n")
-                .append("> ###### 本消息来自小敏家的旺仔 "+ RobotUtils.getDateStr() +"  发布 \n");
+        builder.append("#### 【外卖提醒】 \n\n")
+                .append("> 艳华，外卖到了，快下去拿外卖！！！\n\n")
+                .append("> 皮特，外卖到了，快下去拿外卖！！！\n\n")
+                .append("> Criss，外卖到了，快下去拿外卖！！！\n\n")
+                .append("> ###### 本消息来自不知道是啥玩意的机器人 "+ RobotUtils.getDateStr() +"  发布 \n");
         markdown.setText(builder.toString());
         request.setMarkdown(markdown);
         try {
