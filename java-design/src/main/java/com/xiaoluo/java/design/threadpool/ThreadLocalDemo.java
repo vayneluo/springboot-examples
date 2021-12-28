@@ -23,7 +23,8 @@ public class ThreadLocalDemo {
       }, "thread - " + i).start();
     }
     countDownLatch.await();
-    System.out.println("1.0.1再次修改了分支");
+    System.out.println("1.0.2修改了分支");
+    System.out.println("1.0.2修改了1323分支");
   }
 
   private static class InnerClass {

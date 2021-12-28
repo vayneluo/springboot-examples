@@ -24,6 +24,10 @@ public class AppConfigConstants {
     public static final long COUNT_EXPIRE = 12;
     /** 累加次数 **/
     public static final int ADD_DELTA = 1;
+    /** 前端团队 钉钉WEB_HOOK 地址**/
+    public static final String FRONT_END_TEAM_URL = "https://oapi.dingtalk.com/robot/send?access_token=3b9d82ff9488937771d285043edf9657dd253173f30aa4b855730f5cbed0650d";
+    public static final String FRONT_END_TEAM_URL_SECRET = "SEC64306dfdb299e38a38a02aabc189d07a7211ce31fe0e9b0c58e4b02b0f615d19";
+
 
 
 }

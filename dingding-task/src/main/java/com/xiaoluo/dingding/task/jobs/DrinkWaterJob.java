@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author: Vayne.Luo
  * @date 2019/10/9 11:52
  */
-@Component
+//@Component
 @Slf4j
 public class DrinkWaterJob {
     /** @ 人员 **/
@@ -32,7 +32,7 @@ public class DrinkWaterJob {
     @Autowired
     WaterCountService waterCountService;
 
-    @Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
+    //@Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
     public void needDrinkWater(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
