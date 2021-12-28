@@ -19,7 +19,7 @@ import java.util.Arrays;
  * @author: Vayne.Luo
  * @date 2021/10/21 13:44
  */
-@Component
+//@Component
 @Slf4j
 public class DinnerJob {
 
@@ -27,7 +27,7 @@ public class DinnerJob {
     private static final String VAYNE_MOBILE = "18621706355";
     private static final String LCHM_MOBILE = "17330797616";
 
-    @Scheduled(cron="0 50 10 ? * MON-FRI")
+    //@Scheduled(cron="0 50 10 ? * MON-FRI")
     public void needDinner(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();

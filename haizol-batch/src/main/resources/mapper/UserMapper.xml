@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.haizol.batch.mapper.UserMapper" >
+
+    <select id="getLimitLastComment" resultType="com.haizol.batch.bean.LastCommentRsp" parameterType="com.haizol.batch.bean.SearchReq">
+        SELECT compId,MAX(latestTime) as lastComment from (
+            select compId,MAX(createTime) as latestTime from db_manage_comp_note t1 where t1.createTime BETWEEN '2019-10-1' and '2020-09-10 23:59:59' and t1.compId > #{maxCompId}  group by compId
+            union all
+            select compId, MAX(createTime) as latestTime from db_manage_comp_renewal_task_notes t2  where t2.createTime BETWEEN '2019-10-1' and '2020-09-10 23:59:59' and t2.compId > #{maxCompId}  group by compId
+            ) t3  group by t3.compId
+        limit 0,50
+    </select>
+
+
+    <update id="updateUserLastComment">
+        update db_user set lastComment = #{lastComment} where compId = #{compId} and (<![CDATA[lastComment < #{lastComment}]]>  or lastComment is null)
+    </update>
+</mapper>

@@ -18,11 +18,11 @@ import java.util.Arrays;
  * @author: Vayne.Luo
  * @date 2021/10/21 13:44
  */
-@Component
+//@Component
 @Slf4j
 public class TakeDinnerJob {
 
-    @Scheduled(cron="0 30 11 ? * MON-FRI")
+    //@Scheduled(cron="0 30 11 ? * MON-FRI")
     public void needDinner(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();

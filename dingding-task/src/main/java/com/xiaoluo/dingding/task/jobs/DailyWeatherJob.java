@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author: Vayne.Luo
  * @date 2019/10/30 16:20
  */
-@Component
+//@Component
 @Slf4j
 public class DailyWeatherJob {
 
@@ -31,7 +31,7 @@ public class DailyWeatherJob {
     @Autowired
     WeatherCacheService weatherCacheService;
 
-    @Scheduled(cron = "0 0 9 ? * MON-FRI")
+    //@Scheduled(cron = "0 0 9 ? * MON-FRI")
     public void dailyWeather(){
         WeatherVo weatherVo = weatherService.getShangHaiTodayWeather();
         if(null != weatherVo){
