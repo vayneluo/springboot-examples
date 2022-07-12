@@ -22,8 +22,8 @@ public class WorkSummaryJob {
 
     @Scheduled(cron="0 30 17 ? * FRI")
     public void needDinner(){
-        DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.FRONT_END_TEAM_URL
-                , AppConfigConstants.FRONT_END_TEAM_URL_SECRET));
+        DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK
+                , AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
         // 设置@的人
         OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
@@ -34,7 +34,7 @@ public class WorkSummaryJob {
         markdown.setTitle("周报提醒");
         StringBuilder builder = new StringBuilder();
         builder.append("#### 【周报提醒】 \n\n")
-                .append("> 前端小伙伴，快写周报！！！\n\n")
+                .append("> 后端小伙伴，快写周报！！！\n\n")
                 .append("> 快快快！！！\n\n")
                 .append("> ###### 本消息来自不知道是啥玩意的机器人 "+ RobotUtils.getDateStr() +"  发布 \n");
         markdown.setText(builder.toString());
