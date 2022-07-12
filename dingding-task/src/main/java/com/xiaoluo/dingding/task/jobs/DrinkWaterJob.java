@@ -32,7 +32,7 @@ public class DrinkWaterJob {
     @Autowired
     WaterCountService waterCountService;
 
-    //@Scheduled(cron="0 0 10,11,14,15,16,17 ? * MON-FRI")
+    @Scheduled(cron="0 0 9,11,13,15,17,19 ? * MON-FRI")
     public void needDrinkWater(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
@@ -45,12 +45,12 @@ public class DrinkWaterJob {
         request.setAt(at);
         request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
-        markdown.setTitle("旺仔友情提醒");
+        markdown.setTitle("吨吨提醒");
         StringBuilder builder = new StringBuilder();
-        builder.append("#### 【旺仔友情提醒】 \n\n")
-                .append("> 大宝，该喝水了 \n\n")
+        builder.append("#### 【吨吨时间到】 \n\n")
+                .append("> 大口吨起来,吨吨吨 \n\n")
                 .append("> 这是你今天喝的第 **"+ count +"** 杯水哦，太棒了你！\n\n")
-                .append("> ###### 本消息来自小敏家的旺仔 "+ RobotUtils.getDateStr() +"  发布 \n");
+                .append("> ###### 本消息来自Timi "+ RobotUtils.getDateStr() +"  发布 \n");
         markdown.setText(builder.toString());
         request.setMarkdown(markdown);
         try {
