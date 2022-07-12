@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author: Vayne.Luo
  * @date 2019/10/9 11:52
  */
-//@Component
+@Component
 @Slf4j
 public class DrinkWaterJob {
     /** @ 人员 **/
@@ -33,6 +33,7 @@ public class DrinkWaterJob {
     WaterCountService waterCountService;
 
     @Scheduled(cron="0 0 9,11,13,15,17,19 ? * MON-FRI")
+    //@Scheduled(cron="0 7 10 ? * MON-FRI")
     public void needDrinkWater(){
         DingTalkClient client = new DefaultDingTalkClient(RobotUtils.getFinalUrl(AppConfigConstants.WANG_WEB_HOOK,AppConfigConstants.WANG_SECRET));
         OapiRobotSendRequest request = new OapiRobotSendRequest();
@@ -48,9 +49,9 @@ public class DrinkWaterJob {
         markdown.setTitle("吨吨提醒");
         StringBuilder builder = new StringBuilder();
         builder.append("#### 【吨吨时间到】 \n\n")
-                .append("> 大口吨起来,吨吨吨 \n\n")
+                .append("> 大口吨起来，吨吨吨 \n\n")
                 .append("> 这是你今天喝的第 **"+ count +"** 杯水哦，太棒了你！\n\n")
-                .append("> ###### 本消息来自Timi "+ RobotUtils.getDateStr() +"  发布 \n");
+                .append("> ###### 本消息来自Timi小助手于 "+ RobotUtils.getDateStr() +"  发布 \n");
         markdown.setText(builder.toString());
         request.setMarkdown(markdown);
         try {
